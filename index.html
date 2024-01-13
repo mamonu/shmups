@@ -27,6 +27,8 @@
 <script>
     var canvas = document.getElementById('shmupCanvas');
     var ctx = canvas.getContext('2d');
+    ctx.globalCompositeOperation = 'lighter'; // Blending mode to create glow effect
+
 
     var bullets = [];
     var spiralAngle = 0;
@@ -62,20 +64,20 @@ function drawSpaceship() {
 
  var particles = []; // Array to hold particle objects
 
-   function createParticle() {
+    function createParticle() {
         var particle = {
             x: Math.random() * canvas.width,
             y: 0,
-            size: Math.random() * 5 + 2,
-            color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+            size: Math.random() * 3 + 2,
+            color: `hsl(${Math.random() * 360}, 100%, 70%)`, // Bright color for a glow effect
             velocityX: Math.random() * 2 - 1,
-            velocityY: Math.random() * 2 + 1,
-            lifespan: 100
+            velocityY: Math.random() * 2 + 2,
+            lifespan: 90 // Shorter lifespan for a more dynamic effect
         };
         particles.push(particle);
     }
 
-    function updateParticles() {
+function updateParticles() {
         for (var i = particles.length - 1; i >= 0; i--) {
             var p = particles[i];
             p.x += p.velocityX;
@@ -85,13 +87,16 @@ function drawSpaceship() {
             if (p.lifespan <= 0) {
                 particles.splice(i, 1);
             } else {
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+                var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                gradient.addColorStop(0, p.color);
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // Fades to transparent
+         ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
         }
     }
+}
 
 
     
@@ -125,7 +130,7 @@ function drawSpaceship() {
 
 
     setInterval(createSpiralBullets, 1000);
-    setInterval(createParticle, 50); // Regularly create particles
+    setInterval(createParticle, 100); // Regularly create particles
     update();
 
     
