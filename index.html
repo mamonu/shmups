@@ -53,11 +53,17 @@
         requestAnimationFrame(update);
     }
 
-    function drawSpaceship() {
-        var spaceshipX = canvas.width / 2 - spaceshipImage.width / 2;
-        var spaceshipY = canvas.height - spaceshipImage.height - 10;
-        ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY);
-    }
+function drawSpaceship() {
+    var desiredWidth = 80; 
+    var scale = desiredWidth / spaceshipImage.width; 
+    var scaledHeight = spaceshipImage.height * scale; 
+
+    var spaceshipX = canvas.width / 2 - desiredWidth / 2; // Center the spaceship horizontally
+    var spaceshipY = canvas.height - scaledHeight; // Position the spaceship at the bottom
+
+    ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
+}
+
 
     function updateBullets() {
         for (var i = bullets.length - 1; i >= 0; i--) {
