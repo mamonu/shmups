@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shmups</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; }
+        .header { background-color: #333; color: white; padding: 10px; text-align: center; }
+        .nav { background-color: #444; overflow: hidden; }
+        .nav a { float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; }
+        .nav a:hover { background-color: #ddd; color: black; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Welcome to Japanese Shmups</h1>
+</div>
+
+<div class="nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="gallery.html">Gallery</a>
+</div>
+
+<canvas id="shmupCanvas" width="800" height="600"></canvas>
+<script>
+    var canvas = document.getElementById('shmupCanvas');
+    var ctx = canvas.getContext('2d');
+
+    var bullets = [];
+
+    function createBullet() {
+        var x = canvas.width / 2;
+        var y = canvas.height / 2;
+        var angle = Math.random() * Math.PI * 2;
+        var speed = 5 + Math.random() * 5;
+        bullets.push({x: x, y: y, angle: angle, speed: speed});
+    }
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = bullets.length - 1; i >= 0; i--) {
+            var b = bullets[i];
+            b.x += Math.cos(b.angle) * b.speed;
+            b.y += Math.sin(b.angle) * b.speed;
+            
+            if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
+                bullets.splice(i, 1);
+            } else {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'red';
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+        requestAnimationFrame(update);
+    }
+
+    setInterval(createBullet, 200);
+    update();
+</script>
+
+
+  
+<div class="content">
+    <h2>Explore the World of Shmups</h2>
+    <p>This is your homepage. Add content here about shoot 'em up games usually of the manic variety.</p>
+</div>
+
+</body>
+</html>
