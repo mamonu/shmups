@@ -23,7 +23,7 @@
     <a href="gallery.html">Gallery</a>
 </div>
 
-<canvas id="shmupCanvas" width="1080" height="768"></canvas>
+<canvas id="shmupCanvas" width="1920" height="768"></canvas>
 <script>
     var canvas = document.getElementById('shmupCanvas');
     var ctx = canvas.getContext('2d');
@@ -46,15 +46,10 @@
         }
     }
 
-    function update() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawSpaceship();
-        updateBullets();
-        requestAnimationFrame(update);
-    }
+
 
 function drawSpaceship() {
-    var desiredWidth = 280; 
+    var desiredWidth = 120; 
     var scale = desiredWidth / spaceshipImage.width; 
     var scaledHeight = spaceshipImage.height * scale; 
 
@@ -64,6 +59,51 @@ function drawSpaceship() {
     ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
 }
 
+
+ var particles = []; // Array to hold particle objects
+
+   function createParticle() {
+        var particle = {
+            x: Math.random() * canvas.width,
+            y: 0,
+            size: Math.random() * 5 + 2,
+            color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+            velocityX: Math.random() * 2 - 1,
+            velocityY: Math.random() * 2 + 1,
+            lifespan: 100
+        };
+        particles.push(particle);
+    }
+
+    function updateParticles() {
+        for (var i = particles.length - 1; i >= 0; i--) {
+            var p = particles[i];
+            p.x += p.velocityX;
+            p.y += p.velocityY;
+            p.lifespan -= 1;
+
+            if (p.lifespan <= 0) {
+                particles.splice(i, 1);
+            } else {
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+
+    
+   function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawSpaceship();
+        updateBullets();
+        updateParticles(); // Update the particles
+        requestAnimationFrame(update);
+    }
+
+    
 
     function updateBullets() {
         for (var i = bullets.length - 1; i >= 0; i--) {
@@ -83,9 +123,12 @@ function drawSpaceship() {
         }
     }
 
-    
+
     setInterval(createSpiralBullets, 1000);
+    setInterval(createParticle, 50); // Regularly create particles
     update();
+
+    
 </script>
 
 </body>
