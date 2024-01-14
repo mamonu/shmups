@@ -101,40 +101,45 @@ function createSpiralBullets() {
 
 
 function updateBullets() {
-    for (var i = bullets.length - 1; i >= 
-0; i--) {
-var b = bullets[i];
-b.x += Math.cos(b.angle) * b.speed;
-b.y += Math.sin(b.angle) * b.speed;
-    // If the bullet is off-screen, remove it from the array
-    if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-        bullets.splice(i, 1);
-    } else {
-        // Store past positions for tracers
-        if (!b.trail) b.trail = []; // initialize if not present
+    ctx.globalCompositeOperation = 'source-over'; // Ensure normal drawing
+    for (var i = bullets.length - 1; i >= 0; i--) {
+        var b = bullets[i];
+        b.x += Math.cos(b.angle) * b.speed;
+        b.y += Math.sin(b.angle) * b.speed;
+
+        // Check for off-screen bullets
+        if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
+            bullets.splice(i, 1);
+            continue;
+        }
+
+        // Initialize bullet trail if not present
+        if (!b.trail) b.trail = [];
+        // Add current position to the trail
         b.trail.push({ x: b.x, y: b.y });
-        
-        // Remove the oldest positions to keep the trail short
-        if (b.trail.length > 10) { // assuming 10 is the length of the trail you want
+
+        // Limit the length of the trail
+        if (b.trail.length > 20) {
             b.trail.shift();
         }
 
-        // Draw bullet tracer
-        ctx.beginPath();
-        for (var j = 0; j < b.trail.length; j++) {
-            var fade = 1 - j / b.trail.length; // this creates the fade effect
-            ctx.fillStyle = `rgba(128, 0, 128, ${fade})`; // assuming purple bullets
+        // Draw each segment of the trail
+        for (var j = b.trail.length - 1; j >= 0; j--) {
             var pos = b.trail[j];
-            ctx.arc(pos.x, pos.y, 5 * fade, 0, Math.PI * 2); // the size decreases along the trail
+            var fade = (j / b.trail.length);
+
+            // Draw the tracer with decreasing size and opacity
+            ctx.fillStyle = `rgba(128, 0, 128, ${fade})`;
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, 5 * fade, 0, Math.PI * 2);
             ctx.fill();
         }
-        ctx.closePath();
 
-        // Draw the bullet itself
+        // Draw the bullet itself on top of the tracer
         drawBullet(b);
     }
 }
-}
+
 
 
 
