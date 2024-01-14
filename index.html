@@ -127,9 +127,11 @@ function updateBullets() {
         for (var j = b.trail.length - 1; j >= 0; j--) {
             var pos = b.trail[j];
             var fade = (j / b.trail.length);
+            
+            var brightness = Math.floor(128 * fade); // Adjust brightness to fade to black
 
             // Draw the tracer with decreasing size and opacity
-            ctx.fillStyle = `rgba(128, 0, 128, ${fade})`;
+            ctx.fillStyle = `rgba(${brightness}, 0, ${brightness}, ${fade})`;
             ctx.beginPath();
             ctx.arc(pos.x, pos.y, 5 * fade, 0, Math.PI * 2);
             ctx.fill();
