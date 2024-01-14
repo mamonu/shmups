@@ -23,7 +23,7 @@
     <a href="gallery.html">Gallery</a>
 </div>
 
-<canvas id="shmupCanvas" width="1920" height="768"></canvas>
+<canvas id="shmupCanvas" width="1024" height="768"></canvas>
 <script>
     var canvas = document.getElementById('shmupCanvas');
     var ctx = canvas.getContext('2d');
@@ -31,7 +31,7 @@
 
 
     var bullets = [];
-    var spiralAngle = 0;
+    var spiralAngle = 0.1;
     var spaceshipImage = new Image();
     spaceshipImage.src = '8bitspaceship.png';
 
@@ -68,11 +68,11 @@ function drawSpaceship() {
         var particle = {
             x: Math.random() * canvas.width,
             y: 0,
-            size: Math.random() * 3 + 2,
-            color: `hsl(${Math.random() * 360}, 100%, 70%)`, // Bright color for a glow effect
+            size: Math.random() * 5 + 2,
+            color: `hsl(${Math.random() * 360}, 100%, 80%)`, // Bright color for a glow effect
             velocityX: Math.random() * 2 - 1,
             velocityY: Math.random() * 2 + 2,
-            lifespan: 90 // Shorter lifespan for a more dynamic effect
+            lifespan: 150 // Shorter lifespan for a more dynamic effect
         };
         particles.push(particle);
     }
@@ -90,25 +90,14 @@ function updateParticles() {
                 var gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
                 gradient.addColorStop(0, p.color);
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // Fades to transparent
-         ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
         }
     }
 }
 
-
-    
-   function update() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawSpaceship();
-        updateBullets();
-        updateParticles(); // Update the particles
-        requestAnimationFrame(update);
-    }
-
-    
 
     function updateBullets() {
         for (var i = bullets.length - 1; i >= 0; i--) {
@@ -126,6 +115,14 @@ function updateParticles() {
                 ctx.closePath();
             }
         }
+    }
+
+  function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawSpaceship();
+        updateBullets();
+        updateParticles(); // Update the particles
+        requestAnimationFrame(update);
     }
 
 
