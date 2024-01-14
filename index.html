@@ -134,19 +134,24 @@ function updateParticles() {
         ctx.restore();
     }
 
-    function updateBullets() {
-        for (var i = bullets.length - 1; i >= 0; i--) {
-            var b = bullets[i];
-            b.x += Math.cos(b.angle) * b.speed;
-            b.y += Math.sin(b.angle) * b.speed;
 
-            if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-                bullets.splice(i, 1);
-            } else {
-                drawBullet(b);
-            }
+    function updateBullets() {
+    for (var i = bullets.length - 1; i >= 0; i--) {
+        var b = bullets[i];
+        b.x += Math.cos(b.angle) * b.speed;
+        b.y += Math.sin(b.angle) * b.speed;
+
+        // Check if the bullet is going outside the intended half-circle
+        if (b.y < centerY) {
+            bullets.splice(i, 1); // Remove the bullet if it goes above the center Y
+        } else if (b.x < 0 || b.x > canvas.width || b.y > canvas.height) {
+            bullets.splice(i, 1); // Also remove if it goes off the canvas
+        } else {
+            drawBullet(b);
         }
     }
+}
+
 
 
   function update() {
