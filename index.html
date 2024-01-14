@@ -120,12 +120,18 @@ function drawBoss() {
     var scaledWidth = bossImage.width * bossscale;
     var scaledHeight = bossImage.height * bossscale;
 
-    bossX = canvas.width / 2 - scaledWidth / 2;
-    bossY = canvas.height / 6 - scaledHeight / 2;
+    bossXCorner = canvas.width / 2 - scaledWidth / 2;
+    bossYCorner = canvas.height / 6 - scaledHeight / 2;
+
+    // Adjust to center position
+    bossX = bossXCorner + scaledWidth / 2;
+    bossY = bossYCorner + scaledHeight / 2;
 
     ctx.drawImage(bossImage, bossX, bossY, scaledWidth, scaledHeight);
 }
 
+
+    
 
 
  var particles = []; // Array to hold particle objects
