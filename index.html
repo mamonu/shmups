@@ -23,7 +23,7 @@
     <a href="gallery.html">Gallery</a>
 </div>
 
-<canvas id="shmupCanvas" width="1400" height="950"></canvas>
+<canvas id="shmupCanvas" width="1400" height="768"></canvas>
 <script>
     var canvas = document.getElementById('shmupCanvas');
     var ctx = canvas.getContext('2d');
@@ -67,10 +67,10 @@ function drawSpaceship() {
             x: Math.random() * canvas.width,
             y: 0,
             size: Math.random() * 5 + 2,
-            color: `hsl(${Math.random() * 360}, 100%, 80%)`, // Bright color for a glow effect
+            color: `hsl(${Math.random() * 360}, 100%, 80%)`, // Bright for glow effect
             velocityX: Math.random() * 2 - 1,
             velocityY: Math.random() * 2 + 2,
-            lifespan: 150 // Shorter lifespan for a more dynamic effect
+            lifespan: 180 
         };
         particles.push(particle);
     }
@@ -97,6 +97,22 @@ function updateParticles() {
 }
 
 
+    function drawBullet(bullet) {
+        ctx.save();
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = 'rgba(128, 0, 128, 0.7)';
+        var gradient = ctx.createRadialGradient(bullet.x, bullet.y, 0, bullet.x, bullet.y, 10);
+        gradient.addColorStop(0, 'white');
+        gradient.addColorStop(0.1, 'purple');
+        gradient.addColorStop(0.5, 'rgba(128, 0, 128, 0.5)');
+        gradient.addColorStop(1, 'rgba(128, 0, 128, 0)');
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
     function updateBullets() {
         for (var i = bullets.length - 1; i >= 0; i--) {
             var b = bullets[i];
@@ -106,14 +122,11 @@ function updateParticles() {
             if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
                 bullets.splice(i, 1);
             } else {
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
-                ctx.fillStyle = 'purple';
-                ctx.fill();
-                ctx.closePath();
+                drawBullet(b);
             }
         }
     }
+
 
   function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
