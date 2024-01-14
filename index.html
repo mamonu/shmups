@@ -32,46 +32,17 @@ var ctx = canvas.getContext('2d');
 ctx.globalCompositeOperation = 'source-over';
 
 var spaceshipImage = new Image();
-spaceshipImage.src = '8bitspaceship.png'; // Make sure this path is correct
-
+spaceshipImage.src = '8bitspaceship.png';  
 var bossImage = new Image();
-bossImage.src = 'boss_spaceship.png'; // Make sure this path is correct
-
-var imagesLoaded = 0;
-var totalImages = 2;
-
-spaceshipImage.onload = function() {
-    imagesLoaded++;
-    if (imagesLoaded === totalImages) {
-        startGame();
-    }
-};
-
-bossImage.onload = function() {
-    imagesLoaded++;
-    if (imagesLoaded === totalImages) {
-        startGame();
-    }
-};
+bossImage.src = 'boss_spaceship.png'; 
 
 
-
-
-
-    
-
-
-
-
-
-
-
-    var bullets = [];
-    var spiralAngle = 0.0;
-    var spaceshipX = canvas.width / 2;
-    var moveSpeed = 1; // Slower movement speed
-    var moveDirection = 1; // 1 for right, -1 for left
-    var moveDuration = 0; // How long to move in the current direction
+var bullets = [];
+var spiralAngle = 0.0;
+var spaceshipX = canvas.width / 2;
+var moveSpeed = 1; // Slower movement speed
+var moveDirection = 1; // 1 for right, -1 for left
+var moveDuration = 0; // How long to move in the current direction
 
 
 
@@ -219,16 +190,20 @@ function updateParticles() {
         updateBullets();
         updateParticles(); // Update the particles
         requestAnimationFrame(update);
+        console.log('Updating game frame');
+
+
+      
     }
 
 
-
-function startGame() {
     setInterval(createSpiralBullets, 1000);
     setInterval(createParticle, 100); // Regularly create particles
     update();
-}
 
+// Check if the images are loaded
+console.log('Spaceship image loaded:', spaceshipImage.complete);
+console.log('Boss image loaded:', bossImage.complete);
     // setInterval(createSpiralBullets, 1000);
     // setInterval(createParticle, 100); // Regularly create particles
     // update();
