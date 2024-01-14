@@ -53,13 +53,13 @@ function createSpiralBullets() {
     var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
     spiralAngle += 0.02;
 
-    var startAngle = Math.PI / 2; // Start at the top (90 degrees)
-    var endAngle = 3 * Math.PI / 2; // Half circle to the bottom (270 degrees)
+    var startAngle = Math.PI ; // Start at the top (90 degrees)
+    var endAngle = 2 * Math.PI ; // Half circle to the bottom (270 degrees)
 
     for (var i = 0; i < numberOfBullets; i++) {
         // This will create a fan pattern downwards
         var angle = startAngle + (endAngle - startAngle) * (i / (numberOfBullets - 1));
-        var speed = 2;
+        var speed = 1.2;
         bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
     }
 }
