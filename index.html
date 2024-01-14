@@ -53,8 +53,9 @@ function createSpiralBullets() {
     var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
     spiralAngle += 0.02;
 
-    var startAngle = Math.PI /2; // Start at the top (90 degrees)
-    var endAngle = 3 * Math.PI /2 ; // Half circle to the bottom (270 degrees)
+    var startAngle = Math.PI * 3 / 2;
+    var endAngle = Math.PI * 2;
+
 
     for (var i = 0; i < numberOfBullets; i++) {
         // This will create a fan pattern downwards
@@ -193,15 +194,15 @@ function updateParticles() {
         updateBullets();
         updateParticles(); // Update the particles
         requestAnimationFrame(update);
-        console.log('Updating game frame');
+        
 
 
       
     }
 
 
-    setInterval(createSpiralBullets, 100);
-    setInterval(createParticle, 100); // Regularly create particles
+    setInterval(createSpiralBullets, 2000);
+    setInterval(createParticle, 314); // Regularly create particles
     update();
 
 // Check if the images are loaded
