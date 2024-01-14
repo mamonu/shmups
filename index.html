@@ -44,24 +44,22 @@ var moveSpeed = 1; // Slower movement speed
 var moveDirection = 1; // 1 for right, -1 for left
 var moveDuration = 0; // How long to move in the current direction
 var scale = 120 / spaceshipImage.width; 
+var bossX = 0;
+var bossY = 0;
 
 
 
-   function createSpiralBullets() {	    
-        var numberOfBullets = 20;	       
-        var centerX = canvas.width / 2;	        
-        var centerY = canvas.height / 2;	       
-        spiralAngle += 0.1;	      
 
+function createSpiralBullets() {
+    var numberOfBullets = 20;
+    spiralAngle += 0.1;
 
-        for (var i = 0; i < numberOfBullets; i++) {	      
-            var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;	            
-            var speed = 2;	           
-            bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });	     
-        }	 
-   }
-    
-
+    for (var i = 0; i < numberOfBullets; i++) {
+        var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;
+        var speed = 2;
+        bullets.push({ x: bossX, y: bossY, angle: angle, speed: speed });
+    }
+}
 
     
 
@@ -122,11 +120,12 @@ function drawBoss() {
     var scaledWidth = bossImage.width * bossscale;
     var scaledHeight = bossImage.height * bossscale;
 
-    var bossX = canvas.width / 2 - scaledWidth / 2;
-    var bossY = canvas.height / 6 - scaledHeight / 2;
+    bossX = canvas.width / 2 - scaledWidth / 2;
+    bossY = canvas.height / 6 - scaledHeight / 2;
 
     ctx.drawImage(bossImage, bossX, bossY, scaledWidth, scaledHeight);
 }
+
 
 
  var particles = []; // Array to hold particle objects
