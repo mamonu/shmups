@@ -27,7 +27,8 @@
 <script>
     var canvas = document.getElementById('shmupCanvas');
     var ctx = canvas.getContext('2d');
-    ctx.globalCompositeOperation = 'lighter'; // Blending mode to create glow effect
+    //ctx.globalCompositeOperation = 'lighter'; // Blending mode to create glow effect
+    ctx.globalCompositeOperation = 'source-over'; 
 
 
     var bullets = [];
