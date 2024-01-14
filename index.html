@@ -31,6 +31,44 @@
     ctx.globalCompositeOperation = 'source-over'; 
 
 
+var spaceshipImage = new Image();
+spaceshipImage.src = '8bitspaceship.png';
+
+var bossImage = new Image();
+bossImage.src = 'boss_spaceship.png'; // Replace with the actual path to your sprite
+
+var imagesLoaded = 0;
+var totalImages = 2; // Total number of images to load
+
+spaceshipImage.onload = function() {
+    imagesLoaded++;
+    if (imagesLoaded === totalImages) {
+        startGame();
+    }
+};
+
+bossImage.onload = function() {
+    imagesLoaded++;
+    if (imagesLoaded === totalImages) {
+        startGame();
+    }
+};
+
+function startGame() {
+    setInterval(createSpiralBullets, 1000);
+    setInterval(createParticle, 100); // Regularly create particles
+    update();
+}
+
+
+
+
+
+
+
+
+    
+
     var bullets = [];
     var spiralAngle = 0.0;
     var spaceshipImage = new Image();
@@ -64,17 +102,27 @@ function createSpiralBullets() {
 }
 
 
+// function drawSpaceship() {
+//     var desiredWidth = 120; 
+//     var scale = desiredWidth / spaceshipImage.width; 
+//     var scaledHeight = spaceshipImage.height * scale; 
+
+//     var spaceshipX = canvas.width / 2 - desiredWidth / 2; // Center the spaceship horizontally
+//     var spaceshipY = canvas.height - scaledHeight; // Position the spaceship at the bottom
+
+//     ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
+// }
+
 function drawSpaceship() {
     var desiredWidth = 120; 
     var scale = desiredWidth / spaceshipImage.width; 
     var scaledHeight = spaceshipImage.height * scale; 
 
-    var spaceshipX = canvas.width / 2 - desiredWidth / 2; // Center the spaceship horizontally
+    // Use the global spaceshipX variable
     var spaceshipY = canvas.height - scaledHeight; // Position the spaceship at the bottom
 
-    ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
+    ctx.drawImage(spaceshipImage, spaceshipX - desiredWidth / 2, spaceshipY, desiredWidth, scaledHeight);
 }
-
     
 
 function drawBoss() {
@@ -194,9 +242,9 @@ function updateParticles() {
     }
 
 
-    setInterval(createSpiralBullets, 1000);
-    setInterval(createParticle, 100); // Regularly create particles
-    update();
+    // setInterval(createSpiralBullets, 1000);
+    // setInterval(createParticle, 100); // Regularly create particles
+    // update();
 
     
 </script>
