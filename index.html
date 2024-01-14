@@ -65,10 +65,15 @@ function drawSpaceship() {
 }
 
 function drawBoss() {
-    var bossX = canvas.width / 2 - bossImage.width / 2; // Center the boss horizontally
-    var bossY = canvas.height / 6 - bossImage.height / 2; // Position where bullets spawn
+    var scale = 0.2; // Adjust this scale factor as needed
 
-    ctx.drawImage(bossImage, bossX, bossY);
+    var scaledWidth = bossImage.width * scale;
+    var scaledHeight = bossImage.height * scale;
+
+    var bossX = canvas.width / 2 - scaledWidth / 2;
+    var bossY = canvas.height / 6 - scaledHeight / 2;
+
+    ctx.drawImage(bossImage, bossX, bossY, scaledWidth, scaledHeight);
 }
 
 
