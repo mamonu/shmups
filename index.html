@@ -47,37 +47,20 @@ var scale = 120 / spaceshipImage.width;
 
 
 
-// function createSpiralBullets() {
-//     var numberOfBullets = 12;
-//     var centerX = canvas.width / 2;
-//     var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
-//     spiralAngle += 0.02;
-
-//   var startAngle =3 * Math.PI / 2; 
-//   var endAngle = 5 * Math.PI / 2;  
+   function createSpiralBullets() {	    
+        var numberOfBullets = 20;	       
+        var centerX = canvas.width / 2;	        
+        var centerY = canvas.height / 2;	       
+        spiralAngle += 0.1;	      
 
 
-
-//     for (var i = 0; i < numberOfBullets; i++) {
-//         // This will create a fan pattern downwards
-//         var angle = startAngle + (endAngle - startAngle) * (i / (numberOfBullets - 1));
-//         var speed = 1.2;
-//         bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
-//     }
-// }
-
-function createSpiralBullets() {
-    var numberOfBullets = 12;
-    var centerX = canvas.width / 2;
-    var centerY = canvas.height / 6;
-    spiralAngle += 0.02;
-
-for (var i = 0; i < numberOfBullets; i++) {
-    // Create a full circle pattern
-    var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;
-    var speed = 1.2;
-    bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
-}
+        for (var i = 0; i < numberOfBullets; i++) {	      
+            var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;	            
+            var speed = 2;	           
+            bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });	     
+        }	 
+   }
+    
 
 
     
@@ -99,36 +82,24 @@ for (var i = 0; i < numberOfBullets; i++) {
     }
 
 
-//     function updateBullets() {
-//     for (var i = bullets.length - 1; i >= 0; i--) {
-//         var b = bullets[i];
-//         b.x += Math.cos(b.angle) * b.speed;
-//         b.y += Math.sin(b.angle) * b.speed;
 
-       
-//        if (b.x < 0 || b.x > canvas.width || b.y > canvas.height) {
-//             bullets.splice(i, 1); // Also remove if it goes off the canvas
-//         } else {
-//             drawBullet(b);
-//         }
-//     }
-// }
+    function updateBullets() {
+        for (var i = bullets.length - 1; i >= 0; i--) {
+            var b = bullets[i];
+            b.x += Math.cos(b.angle) * b.speed;
+            b.y += Math.sin(b.angle) * b.speed;
 
-
-function updateBullets() {
-    for (var i = bullets.length - 1; i >= 0; i--) {
-        var b = bullets[i];
-        b.x += Math.cos(b.angle) * b.speed;
-        b.y += Math.sin(b.angle) * b.speed;
-
-        // Remove the bullet if it goes off any edge of the canvas
-        if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
-            bullets.splice(i, 1);
-        } else {
-            drawBullet(b);
+            if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
+                bullets.splice(i, 1);
+            } else {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = 'purple';
+                ctx.fill();
+                ctx.closePath();
+            }
         }
     }
-}
 
     
 
