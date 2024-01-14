@@ -40,11 +40,18 @@
     bossImage.src = 'boss_spaceship.png'; // Replace with the actual path to your sprite
 
 
+    var spaceshipX = canvas.width / 2;
+    var moveSpeed = 1; // Slower movement speed
+    var moveDirection = 1; // 1 for right, -1 for left
+    var moveDuration = 0; // How long to move in the current direction
+
+
+
 function createSpiralBullets() {
     var numberOfBullets = 20;
     var centerX = canvas.width / 2;
     var centerY = canvas.height / 6;
-    spiralAngle += 0.15;
+    spiralAngle += 0.02;
 
     var startAngle = Math.PI / 2;  // Starts at the rightmost point of the circle
     var endAngle = 3 * Math.PI / 2;  // Ends at the leftmost point of the circle
@@ -67,6 +74,8 @@ function drawSpaceship() {
 
     ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
 }
+
+    
 
 function drawBoss() {
     var scale = 0.2; // Adjust this scale factor as needed
@@ -96,6 +105,28 @@ function drawBoss() {
         particles.push(particle);
     }
 
+
+function updateSpaceship() {
+    // Move the spaceship
+    spaceshipX += moveSpeed * moveDirection;
+
+    // Decrease the remaining duration of the current movement
+    moveDuration--;
+
+    // If the movement duration has ended, choose a new direction and duration
+    if (moveDuration <= 0) {
+        moveDirection = Math.random() < 0.5 ? -1 : 1; // Randomly choose left or right
+        moveDuration = Math.random() * 60 + 30; // Random duration between 30 and 90 frames
+    }
+
+    // Prevent the spaceship from going off the canvas
+    spaceshipX = Math.max(spaceshipX, 0 + spaceshipImage.width * scale / 2);
+    spaceshipX = Math.min(spaceshipX, canvas.width - spaceshipImage.width * scale / 2);
+}
+
+
+
+    
 function updateParticles() {
         for (var i = particles.length - 1; i >= 0; i--) {
             var p = particles[i];
@@ -154,6 +185,7 @@ function updateParticles() {
 
   function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        updateSpaceship()
         drawSpaceship();
         drawBoss();
         updateBullets();
