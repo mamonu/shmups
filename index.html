@@ -47,25 +47,40 @@ var scale = 120 / spaceshipImage.width;
 
 
 
+// function createSpiralBullets() {
+//     var numberOfBullets = 12;
+//     var centerX = canvas.width / 2;
+//     var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
+//     spiralAngle += 0.02;
+
+//   var startAngle =3 * Math.PI / 2; 
+//   var endAngle = 5 * Math.PI / 2;  
+
+
+
+//     for (var i = 0; i < numberOfBullets; i++) {
+//         // This will create a fan pattern downwards
+//         var angle = startAngle + (endAngle - startAngle) * (i / (numberOfBullets - 1));
+//         var speed = 1.2;
+//         bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
+//     }
+// }
+
 function createSpiralBullets() {
     var numberOfBullets = 12;
     var centerX = canvas.width / 2;
-    var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
+    var centerY = canvas.height / 6;
     spiralAngle += 0.02;
 
-  var startAngle =3 * Math.PI / 2; 
-  var endAngle = 5 * Math.PI / 2;  
-
-
-
-    for (var i = 0; i < numberOfBullets; i++) {
-        // This will create a fan pattern downwards
-        var angle = startAngle + (endAngle - startAngle) * (i / (numberOfBullets - 1));
-        var speed = 1.2;
-        bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
-    }
+for (var i = 0; i < numberOfBullets; i++) {
+    // Create a full circle pattern
+    var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;
+    var speed = 1.2;
+    bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
 }
 
+
+    
 
     function drawBullet(bullet) {
         ctx.save();
