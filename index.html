@@ -25,20 +25,20 @@
 
 <canvas id="shmupCanvas" width="1400" height="768"></canvas>
 <script>
-    var canvas = document.getElementById('shmupCanvas');
-    var ctx = canvas.getContext('2d');
-    //ctx.globalCompositeOperation = 'lighter'; // Blending mode to create glow effect
-    ctx.globalCompositeOperation = 'source-over'; 
 
+
+var canvas = document.getElementById('shmupCanvas');
+var ctx = canvas.getContext('2d');
+ctx.globalCompositeOperation = 'source-over';
 
 var spaceshipImage = new Image();
-spaceshipImage.src = '8bitspaceship.png';
+spaceshipImage.src = '8bitspaceship.png'; // Make sure this path is correct
 
 var bossImage = new Image();
-bossImage.src = 'boss_spaceship.png'; // Replace with the actual path to your sprite
+bossImage.src = 'boss_spaceship.png'; // Make sure this path is correct
 
 var imagesLoaded = 0;
-var totalImages = 2; // Total number of images to load
+var totalImages = 2;
 
 spaceshipImage.onload = function() {
     imagesLoaded++;
@@ -54,30 +54,20 @@ bossImage.onload = function() {
     }
 };
 
-function startGame() {
-    setInterval(createSpiralBullets, 1000);
-    setInterval(createParticle, 100); // Regularly create particles
-    update();
-}
-
-
-
-
 
 
 
 
     
 
+
+
+
+
+
+
     var bullets = [];
     var spiralAngle = 0.0;
-    var spaceshipImage = new Image();
-    spaceshipImage.src = '8bitspaceship.png';
-
-    var bossImage = new Image();
-    bossImage.src = 'boss_spaceship.png'; // Replace with the actual path to your sprite
-
-
     var spaceshipX = canvas.width / 2;
     var moveSpeed = 1; // Slower movement speed
     var moveDirection = 1; // 1 for right, -1 for left
@@ -102,16 +92,6 @@ function createSpiralBullets() {
 }
 
 
-// function drawSpaceship() {
-//     var desiredWidth = 120; 
-//     var scale = desiredWidth / spaceshipImage.width; 
-//     var scaledHeight = spaceshipImage.height * scale; 
-
-//     var spaceshipX = canvas.width / 2 - desiredWidth / 2; // Center the spaceship horizontally
-//     var spaceshipY = canvas.height - scaledHeight; // Position the spaceship at the bottom
-
-//     ctx.drawImage(spaceshipImage, spaceshipX, spaceshipY, desiredWidth, scaledHeight);
-// }
 
 function drawSpaceship() {
     var desiredWidth = 120; 
@@ -241,6 +221,13 @@ function updateParticles() {
         requestAnimationFrame(update);
     }
 
+
+
+function startGame() {
+    setInterval(createSpiralBullets, 1000);
+    setInterval(createParticle, 100); // Regularly create particles
+    update();
+}
 
     // setInterval(createSpiralBullets, 1000);
     // setInterval(createParticle, 100); // Regularly create particles
