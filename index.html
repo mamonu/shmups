@@ -50,18 +50,20 @@ var scale = 120 / spaceshipImage.width;
 function createSpiralBullets() {
     var numberOfBullets = 20;
     var centerX = canvas.width / 2;
-    var centerY = canvas.height / 6;
+    var centerY = canvas.height / 6; // This may need to be adjusted to the boss's position.
     spiralAngle += 0.02;
 
-    var startAngle = Math.PI / 2;  // Starts at the rightmost point of the circle
-    var endAngle = 3 * Math.PI / 2;  // Ends at the leftmost point of the circle
+    var startAngle = Math.PI / 2; // Start at the top (90 degrees)
+    var endAngle = 3 * Math.PI / 2; // Half circle to the bottom (270 degrees)
 
     for (var i = 0; i < numberOfBullets; i++) {
-        var angle = startAngle + ((endAngle - startAngle) / numberOfBullets) * i + spiralAngle;
+        // This will create a fan pattern downwards
+        var angle = startAngle + (endAngle - startAngle) * (i / (numberOfBullets - 1));
         var speed = 2;
         bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
     }
 }
+
 
 
 
@@ -78,10 +80,10 @@ function drawSpaceship() {
     
 
 function drawBoss() {
-    var scale = 0.2; // Adjust this scale factor as needed
+    var bossscale = 0.2; // Adjust this scale factor as needed
 
-    var scaledWidth = bossImage.width * scale;
-    var scaledHeight = bossImage.height * scale;
+    var scaledWidth = bossImage.width * bossscale;
+    var scaledHeight = bossImage.height * bossscale;
 
     var bossX = canvas.width / 2 - scaledWidth / 2;
     var bossY = canvas.height / 6 - scaledHeight / 2;
