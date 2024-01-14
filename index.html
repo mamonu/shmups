@@ -40,18 +40,22 @@
     bossImage.src = 'boss_spaceship.png'; // Replace with the actual path to your sprite
 
 
-    function createSpiralBullets() {
-        var numberOfBullets = 20;
-        var centerX = canvas.width / 2;
-        var centerY = canvas.height / 6;
-        spiralAngle += 0.15; 
+function createSpiralBullets() {
+    var numberOfBullets = 20;
+    var centerX = canvas.width / 2;
+    var centerY = canvas.height / 6;
+    spiralAngle += 0.15;
 
-        for (var i = 0; i < numberOfBullets; i++) {
-            var angle = (Math.PI * 2 / numberOfBullets) * i + spiralAngle;
-            var speed = 2;
-            bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
-        }
+    var startAngle = Math.PI / 2;  // Starts at the rightmost point of the circle
+    var endAngle = 3 * Math.PI / 2;  // Ends at the leftmost point of the circle
+
+    for (var i = 0; i < numberOfBullets; i++) {
+        var angle = startAngle + ((endAngle - startAngle) / numberOfBullets) * i + spiralAngle;
+        var speed = 2;
+        bullets.push({ x: centerX, y: centerY, angle: angle, speed: speed });
     }
+}
+
 
 function drawSpaceship() {
     var desiredWidth = 120; 
